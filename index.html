@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SickSense</title>
+    <style>
+        /* Reset and Base Styles */
+        body {
+            background-image: url(https://videocdn.cdnpk.net/videos/f8f31802-13a9-5855-8131-9daff31cfa4e/horizontal/thumbnails/large.jpg?semt=ais_hybrid&item_id=6111772&w=740&q=80); /* Replace with your image file name or URL */
+            background-size: cover;                  /* Stretches image to cover the screen */
+            background-position: center;             /* Centers the image */
+            background-repeat: no-repeat;            /* Prevents image tiling */
+            background-attachment: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+
+        /* Top Navigation Banner */
+        header {
+            background-color: #ADE8F4;
+            border-bottom: 1px solid #e1e4e8;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+        }
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            font-size: 25px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+            font-size: 20px;
+        }
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        label {
+            cursor: pointer;
+            
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0052a3;
+        }
+
+        /* The Results Box & Table Styles */
+        .results-box {
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 100px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        th {
+            background-color: #f4f4f9;
+            font-weight: 600;
+            color: #555;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .default-msg {
+            padding: 10px;
+            color: #666;
+            text-align: center;
+        }
+        .no-msg{
+            padding: 10px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top White Banner / Header -->
+    <header>
+        <a href="index.html" class="logo">Common Illness Checker </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        <h2>Filter the List</h2>
+        
+        <div class="filters">
+            <p style="font-size: 25px;"><strong>Select symptoms:</strong></p>
+            <p>Some symptoms can be related to one another even if they have different classification.</p>
+            
+            <div class="checkbox-group">
+                <label><b>Respiratory Symptoms</b></label>
+                <label><input type="checkbox" class="filter-checkbox" value="runny/stuffynose"> Runny/Stuffy Nose</label>
+                <label><input type="checkbox" class="filter-checkbox" value="sneezing"> Sneezing</label>
+                <label><input type="checkbox" class="filter-checkbox" value="itchynose"> Itchy Nose </label>
+                <label><input type="checkbox" class="filter-checkbox" value="sorethroat"> Sore Throat</label>
+                <label><input type="checkbox" class="filter-checkbox" value="itchythroat"> Itchy Throat </label>
+                <label><input type="checkbox" class="filter-checkbox" value="coughing"> Coughing</label>
+                <label><input type="checkbox" class="filter-checkbox" value="drycoughing"> Dry Coughing </label>
+                <label><input type="checkbox" class="filter-checkbox" value="pleghmcough"> Cough with pleghm </label>
+                <label><b>Body Symptoms</b></label>
+                <label><input type="checkbox" class="filter-checkbox" value="fatigue"> Fatigue</label>
+                <label><input type="checkbox" class="filter-checkbox" value="fever"> Fever </label>
+                <label><input type="checkbox" class="filter-checkbox" value="bodyaches"> Body Aches </label>
+                <label><input type="checkbox" class="filter-checkbox" value="coldsweat"> Cold Sweat </label>
+                <label><input type="checkbox" class="filter-checkbox" value="badbloodcramps">Severe Menstrual Cramps </label>
+                <label><b>Head Symptoms</b></label>
+                <label><input type="checkbox" class="filter-checkbox" value="itchyeyes"> Itchy Eyes </label>
+                <label><input type="checkbox" class="filter-checkbox" value="headache"> Headache </label>
+                <label><input type="checkbox" class="filter-checkbox" value="migraine"> Migraine </label>
+                <label><input type="checkbox" class="filter-checkbox" value="dizzy"> Dizziness </label>
+                <label><input type="checkbox" class="filter-checkbox" value="facepain"> Pain/Pressure in the face </label>
+                <label><input type="checkbox" class="filter-checkbox" value="nausea"> Nausea </label>
+                <label><b>Stomach Symptoms</b></label>
+                <label><input type="checkbox" class="filter-checkbox" value="wetpoopy"> Watery Diarrhea </label>
+                <label><input type="checkbox" class="filter-checkbox" value="tummycramp"> Stomach Cramps </label>
+                <label><input type="checkbox" class="filter-checkbox" value="tummydiscomfort"> Stomach Discomfort </label>
+                <label><input type="checkbox" class="filter-checkbox" value="tummypain"> Stomach Pain </label>
+                <label><input type="checkbox" class="filter-checkbox" value="bloating"> Bloating </label>
+                <label><input type="checkbox" class="filter-checkbox" value="gassy"> Gassiness </label>
+                <label><input type="checkbox" class="filter-checkbox" value="vomiting"> Vomiting </label>
+                <label><input type="checkbox" class="filter-checkbox" value="heartburn"> Heartburn </label>
+                <label><input type="checkbox" class="filter-checkbox" value="constipation"> Constipation </label>
+            </div>
+
+            <button id="search-btn">Search</button>
+        </div>
+
+        <h3 style="font-size: 25px;">Results:</h3>
+        <div class="results-box" id="results-container"
+            <div class="default-msg">Click search to see items!</div>
+        </div>
+    </div>
+
+    <script>
+        const items = [
+            { name: "Common Cold", categories: ["runny/stuffynose", "sorethroat","coughing","sneezing","fatigue", "itchynose", "bodyaches", "fever"], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Common Cold", categories: ["runny/stuffynose", "sorethroat","coughing","sneezing","fatigue", "itchynose", "bodyaches",], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Common Cold", categories: ["runny/stuffynose", "sorethroat","coughing","sneezing","fatigue", "itchynose"], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Common Cold", categories: ["runny/stuffynose", "coughing","sneezing", "itchynose"], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Common Cold", categories: ["runny/stuffynose", "coughing", "sneezing"], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Common Cold", categories: ["runny/stuffynose", "coughing"], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Common Cold", categories: ["runny/stuffynose"], 
+            color: "Proper food intake, more water, and a sufficient amount of rest. Supportive over the counter treatments include paracetamol for fever and headaches, decongestants, antihistamines, and cough medicines." , doctime: "When symptoms persist past 10 days, have a fever that last over 3 days or if the patient wont eat."},
+
+            { name: "Seasonal Flu", categories: ["runny/stuffynose"], 
+            color: "Recommendedthe usual 8-hr sleep, proper hydration, eating nutritious food, and managing current symptoms.  For example, if the symptoms are unbearable, paracetamol or ibuprofen for fever, headache and muscle aches; cough suppressants or expectorants, lozenges to sooth throat irritation. " , doctime: "Difficulty breathing, deep breathing, lethargy, and irritability due to low oxygen in brain."},
+
+            { name: "Seasonal Flu", categories: ["fever", "bodyaches", "drycoughing", "fatigue"], 
+            color: "Recommendedthe usual 8-hr sleep, proper hydration, eating nutritious food, and managing current symptoms.  For example, if the symptoms are unbearable, paracetamol or ibuprofen for fever, headache and muscle aches; cough suppressants or expectorants, lozenges to sooth throat irritation. " , doctime: "Difficulty breathing, deep breathing, lethargy, and irritability due to low oxygen in brain."},
+
+            { name: "Allergic Rhinitis", categories: ["sneezing", "runny/stuffynose", "itchyeyes", "itchynose", "itchythroat"], 
+            color: "Avoid triggers and keep surrounding environment clean. Over the counter oral antihistamine(cetirizine, loratadine) and some are prescribed like inhaled corticosteroids (Avamys, Nasonex) or inhaled antihistamines." , doctime: "If the symptoms already begin to affect the daily life of the person, if symptoms persist for more than 7-10 days, accompanied by headache and/or neurological symptoms. "},
+
+            { name: "Allergic Rhinitis", categories: ["sneezing", "runny/stuffynose", "itchyeyes", "itchy throat"], 
+            color: "Avoid triggers and keep surrounding environment clean. Over the counter oral antihistamine(cetirizine, loratadine) and some are prescribed like inhaled corticosteroids (Avamys, Nasonex) or inhaled antihistamines." , doctime: "If the symptoms already begin to affect the daily life of the person, if symptoms persist for more than 7-10 days, accompanied by headache and/or neurological symptoms. "},
+
+            { name: "Allergic Rhinitis", categories: ["sneezing", "runny/stuffynose", "itchyeyes"], 
+            color: "Avoid triggers and keep surrounding environment clean. Over the counter oral antihistamine(cetirizine, loratadine) and some are prescribed like inhaled corticosteroids (Avamys, Nasonex) or inhaled antihistamines." , doctime: "If the symptoms already begin to affect the daily life of the person, if symptoms persist for more than 7-10 days, accompanied by headache and/or neurological symptoms. "},
+
+            { name: "Allergic Rhinitis", categories: ["sneezing", "runny/stuffynose", "itchy throat"], 
+            color: "Avoid triggers and keep surrounding environment clean. Over the counter oral antihistamine(cetirizine, loratadine) and some are prescribed like inhaled corticosteroids (Avamys, Nasonex) or inhaled antihistamines." , doctime: "If the symptoms already begin to affect the daily life of the person, if symptoms persist for more than 7-10 days, accompanied by headache and/or neurological symptoms. "},
+
+            { name: "Allergic Rhinitis", categories: ["sneezing", "runny/stuffynose"], 
+            color: "Avoid triggers and keep surrounding environment clean. Over the counter oral antihistamine(cetirizine, loratadine) and some are prescribed like inhaled corticosteroids (Avamys, Nasonex) or inhaled antihistamines." , doctime: "If the symptoms already begin to affect the daily life of the person, if symptoms persist for more than 7-10 days, accompanied by headache and/or neurological symptoms. "},
+
+            { name: "Allergic Rhinitis", categories: ["runny/stuffynose"], 
+            color: "Avoid triggers and keep surrounding environment clean. Over the counter oral antihistamine(cetirizine, loratadine) and some are prescribed like inhaled corticosteroids (Avamys, Nasonex) or inhaled antihistamines." , doctime: "If the symptoms already begin to affect the daily life of the person, if symptoms persist for more than 7-10 days, accompanied by headache and/or neurological symptoms. "},
+
+            { name: "Could be viral infection", categories: ["sorethroat"], 
+            color: "For viral sore throat, supportive treatments are over-the-counter, lozenges can help. While bacterial sore throats require prescribed medicines. " , doctime: "When the throat feels too painful, difficulty swallowing, difficulty breathing, inability to open mouth fully, muffled voice, if there is high fever, one sided throat pain, ear ache, stiff neck, or when it is associated with rash, weight loss, and recurring multiple times in a year."},
+
+            { name: "Could be caused from viral infection", categories: ["pleghmcough"], 
+            color: "Mucolytics, antitussives, antihistamines, proton-pump inhibitors, bronchodilators are just a few medicines prescribed." , doctime: "When there is difficulty breathing associated with severe shortness of breath  and wheezing. When there is coughing of blood. Presence of blue lips, face, or fingernails; confusion, severe dizziness, or difficulty staying awake; when there is persistent fever unresponsive to over-the-counter antipyretic; when phlegm is thick, foul-smelling in yellow, green, or rust-colored; when associated with chill and night sweats, inability to drink liquids; when it is associated with weight loss."},
+
+            { name: "Acute Sinusitis", categories: ["runny/stuffynose", "facepain","headache"], 
+            color: "Avoid the irritant and wear a mask if caused by environment and if caused by viral infection can be supportive treatments like paracetamol, decongestant, antihistamine. Bacterial sinusitis needs antibiotics which typically require a prescription. " , doctime: "Advised if there is high fever, sudden swelling, redness, or pain around the eyes, change in vision, and confusion."},
+
+            { name: "Viral Gastroenteritis", categories: ["wetpoopy", "tummycramp","vomiting","nausea"], 
+            color: "Hydration with oral rehydration salts(ORS), avoiding dairy products or drinks that are sugary. " , doctime: "Viral gastroenteritis usually resolves after 1 to 3 days.  For adults, medical attention is sought once patient has inability to take in liquid for more than 24 hours; when there are signs of dehydration (dark urine, extreme thirst, dry mouth and lips, severe dizziness, light headedness, fainting, confusion, vomiting of blood, severe abdominal pain, fever."},
+
+            { name: "Viral Gastroenteritis", categories: ["wetpoopy", "tummycramp","vomiting"], 
+            color: "Hydration with oral rehydration salts(ORS), avoiding dairy products or drinks that are sugary. " , doctime: "Viral gastroenteritis usually resolves after 1 to 3 days.  For adults, medical attention is sought once patient has inability to take in liquid for more than 24 hours; when there are signs of dehydration (dark urine, extreme thirst, dry mouth and lips, severe dizziness, light headedness, fainting, confusion, vomiting of blood, severe abdominal pain, fever."},
+
+            { name: "Indigestion", categories: ["nausea", "bloating", "gassy", "tummypain"], 
+            color: "Antacids (aluminum hydroxide, magnesium hydroxide, calcium carbonate), H2 Blockers (cimetidine, famotidine), proton pump inhibitors (omeprazole, lansoprazole, pantoprazole), prokinetics (domperidone/itopride). Mix of both over the counter and prescribed medicines." , doctime: "Should consider seeking consultation when the chest discomfort radiates to the jaw, neck, left arm or back, sweating, and dizziness as heart attack needs to be ruled out.  Another would be vomiting of blood, passing of stools that are black and tarry to rule out peptic ulcer.  Severe, sudden abdominal pain radiating to the right lower quadrant to rule out appendicitis; difficulty swallowing or feeling of food stuck on then throat, persistent vomiting, weight loss, anemia, and lump or mass in the stomach."},
+
+            { name: "Indigestion", categories: ["bloating", "gassy", "tummypain"], 
+            color: "Antacids (aluminum hydroxide, magnesium hydroxide, calcium carbonate), H2 Blockers (cimetidine, famotidine), proton pump inhibitors (omeprazole, lansoprazole, pantoprazole), prokinetics (domperidone/itopride). Mix of both over the counter and prescribed medicines." , doctime: "Should consider seeking consultation when the chest discomfort radiates to the jaw, neck, left arm or back, sweating, and dizziness as heart attack needs to be ruled out.  Another would be vomiting of blood, passing of stools that are black and tarry to rule out peptic ulcer.  Severe, sudden abdominal pain radiating to the right lower quadrant to rule out appendicitis; difficulty swallowing or feeling of food stuck on then throat, persistent vomiting, weight loss, anemia, and lump or mass in the stomach."},
+
+            { name: "Acid Reflux/GERD", categories: ["heartburn", "nausea", "tummypain"], 
+            color: "Antacids (aluminum hydroxide, magnesium hydroxide, calcium carbonate), H2 Blockers (cimetidine, famotidine), proton pump inhibitors (omeprazole, lansoprazole, pantoprazole), prokinetics (domperidone/itopride). Mix of both over the counter and prescribed medicines." , doctime: "Should consider seeking consultation when the chest discomfort radiates to the jaw, neck, left arm or back, sweating, and dizziness as heart attack needs to be ruled out.  Another would be vomiting of blood, passing of stools that are black and tarry to rule out peptic ulcer.  Severe, sudden abdominal pain radiating to the right lower quadrant to rule out appendicitis; difficulty swallowing or feeling of food stuck on then throat, persistent vomiting, weight loss, anemia, and lump or mass in the stomach."},
+
+            { name: "Acid Reflux/GERD", categories: ["heartburn", "tummypain"], 
+            color: "Antacids (aluminum hydroxide, magnesium hydroxide, calcium carbonate), H2 Blockers (cimetidine, famotidine), proton pump inhibitors (omeprazole, lansoprazole, pantoprazole), prokinetics (domperidone/itopride). Mix of both over the counter and prescribed medicines." , doctime: "Should consider seeking consultation when the chest discomfort radiates to the jaw, neck, left arm or back, sweating, and dizziness as heart attack needs to be ruled out.  Another would be vomiting of blood, passing of stools that are black and tarry to rule out peptic ulcer.  Severe, sudden abdominal pain radiating to the right lower quadrant to rule out appendicitis; difficulty swallowing or feeling of food stuck on then throat, persistent vomiting, weight loss, anemia, and lump or mass in the stomach."},
+
+            { name: "Acid Reflux/GERD", categories: ["heartburn"], 
+            color: "Antacids (aluminum hydroxide, magnesium hydroxide, calcium carbonate), H2 Blockers (cimetidine, famotidine), proton pump inhibitors (omeprazole, lansoprazole, pantoprazole), prokinetics (domperidone/itopride). Mix of both over the counter and prescribed medicines." , doctime: "Should consider seeking consultation when the chest discomfort radiates to the jaw, neck, left arm or back, sweating, and dizziness as heart attack needs to be ruled out.  Another would be vomiting of blood, passing of stools that are black and tarry to rule out peptic ulcer.  Severe, sudden abdominal pain radiating to the right lower quadrant to rule out appendicitis; difficulty swallowing or feeling of food stuck on then throat, persistent vomiting, weight loss, anemia, and lump or mass in the stomach."},
+
+            { name: "Constipation", categories: ["constipation"], 
+            color: "Dietary factors like eating more fiber, shifting from sedentary lifestyle to a more active one such as walking exercises, drinking lots of water, and developing a toilet routing after meal can help. However, laxatives(lactulose) is also best for constipation. ", doctime:"If the constipation last more than a week, or keeps coming back, when you are dependent of the medicines just to poop, when there is associated weight loss, persistent abdominal pain, or significant bloating; when there is blood in your stool; and when there is fa family history of colorectal cancer or inflammatory bowel disease. Urgent care is needed when there is worsening of abdominal pain, repeated vomiting, swollen abdomen, inability to pass gas or stool, fever, fainting and rectal bleeding. " },
+
+            { name: "Motion Sickness", categories: ["tummydiscomfort", "nausea", "vomiting", "dizzy", "coldsweat", "headache"], 
+            color: "Meclizine (Bonamine) or betahistine (Serc). Treat also the underlying condition that causes them.", doctime:"If dizziness or nausea occurs with severe or sudden headache, chest pain, fainting, difficulty speaking, weakness or numbness on one side, trouble walking, severe persistent vomiting, confusion, or vision loss." },
+
+            { name: "Motion Sickness", categories: ["tummydiscomfort", "nausea", "vomiting", "dizzy", "headache"], 
+            color: "Meclizine (Bonamine) or betahistine (Serc). Treat also the underlying condition that causes them.", doctime:"If dizziness or nausea occurs with severe or sudden headache, chest pain, fainting, difficulty speaking, weakness or numbness on one side, trouble walking, severe persistent vomiting, confusion, or vision loss." },
+
+            { name: "Motion Sickness", categories: ["tummydiscomfort", "nausea", "dizzy", "headache"], 
+            color: "Meclizine (Bonamine) or betahistine (Serc). Treat also the underlying condition that causes them.", doctime:"If dizziness or nausea occurs with severe or sudden headache, chest pain, fainting, difficulty speaking, weakness or numbness on one side, trouble walking, severe persistent vomiting, confusion, or vision loss." },
+
+            { name: "Motion Sickness", categories: ["tummydiscomfort", "nausea", "dizzy"], 
+            color: "Meclizine (Bonamine) or betahistine (Serc). Treat also the underlying condition that causes them.", doctime:"If dizziness or nausea occurs with severe or sudden headache, chest pain, fainting, difficulty speaking, weakness or numbness on one side, trouble walking, severe persistent vomiting, confusion, or vision loss." },
+
+            { name: "Migraine", categories: ["migraine"], 
+            color: "Over the counter pain relievers.", doctime:"When there is sudden and extremely severe headache, or when it is associated with numbness on one side, vomiting." },
+
+            { name: "Dysmenorrhea", categories: ["badbloodcramps"], 
+            color: "Over the counter pain relievers.", doctime:"Consultation with an OB-GYNE is warranted when the pain is sudden and on one side; then the severe pain causes, fainting, extreme weakness, dizziness or collapse. " },
+
+            { name: "Tension Headache", categories: ["facepain", "headache"], 
+            color: "Pain relievers like Ibuprofen or Paracetamol can relieve the pain temporarily. However, cause should be addressed like drinking enough water for dehydration, eating regularly for low sugar, getting adequate sleep, eye rest from prolonged computer use.", doctime:"When the headache is associated with vomiting, has become persistent every week, when it is sudden and severe, when there is fever, blurring of vision or double vision, or when it is associated with weakness, numbness, difficulty speaking, confusion, seizure, fainting, or significant drowsiness. " },
+
+            { name: "🍓 Strawberry", categories: ["fruit", "sweet"], color: "Red" }
+        ];
+
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
+            const selectedCategories = Array.from(checkboxes).map(cb => cb.value.toLowerCase());
+
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = ''; 
+
+            if (selectedCategories.length === 0) {
+                resultsContainer.innerHTML = '<div class="no-msg">Click search to see items!</div>';
+                return;
+            }
+
+            // Strict Matching Rule:
+            // An item will ONLY show if every single checked category is present in the item's categories,
+            // AND the item doesn't have extra categories that weren't checked (or you can adjust if items should be subsets).
+            // Here, using `.every()` ensures that if you check Vegetable + Sweet, Broccoli is excluded because it lacks "sweet".
+            const filteredItems = items.filter(item => {
+                // Check if all selected categories exist in the item's categories
+                const allSelectedArePresent = selectedCategories.every(selectedCat => 
+                    item.categories.includes(selectedCat)
+                );
+
+                // Optional strict check: Ensure the item doesn't have unselected categories 
+                // if you want an exact match, or just use `allSelectedArePresent`. 
+                // Based on your example: if only "Vegetable" is checked, Carrot has "sweet" which isn't checked, 
+                // so Carrot shouldn't match. Therefore, the item's categories must match the selected categories exactly or be a subset.
+                const itemMatchesExactly = item.categories.every(itemCat => 
+                    selectedCategories.includes(itemCat)
+                );
+
+                return allSelectedArePresent && itemMatchesExactly;
+            });
+
+            if (filteredItems.length === 0) {
+                resultsContainer.innerHTML = '<div class="default-msg">No items match your selection. Recommended check-up with a doctor.</div>';
+                return;
+            }
+
+            // Build the table dynamically
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Possible Illness</th>
+                            
+                            <th>Recommended treatment</th>
+
+                            <th>When to see a doctor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            filteredItems.forEach(item => {
+                const categoryFormatted = item.categories.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(', ');
+                
+                tableHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        
+                        <td>${item.color}</td>
+
+                        <td>${item.doctime}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            resultsContainer.innerHTML = tableHTML;
+        });
+    </script>
+
+</body>
+</html>
